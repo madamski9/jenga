@@ -1,5 +1,5 @@
 {
-  "name": "grajenga",
+  "name": "frontend",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
@@ -15,10 +15,7 @@
     "react-native": "0.74.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@types/react": "~18.2.45",
-    "@types/react-native": "^0.72.8",
-    "typescript": "^5.1.3"
+    "@babel/core": "^7.20.0"
   },
   "private": true
 }
