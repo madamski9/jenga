@@ -1,20 +1,20 @@
-import React from "react"
-import { View, Text, Button, Alert } from 'react-native';
-import AppStyles from './AppStyles';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './screens/HomeScreen';
+import GameScreen from './screens/GameScreen';
 
-export default function App() {
-    const handlePress = () => {
-        Alert.alert("skibidi sigma rizz")
-    }
+const Stack = createStackNavigator();
+
+const App = () => {
     return (
-        <View style={AppStyles.container}>
-            <Text style={AppStyles.title}>
-                Witaj
-            </Text>
-            <Text style={AppStyles.instructions}>
-                przycisk nacisnij
-            </Text>
-            <Button title="rozpocznij gre" onPress={handlePress}/>
-        </View>
-    )
-}
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Home">
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Game" component={GameScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+};
+
+export default App;
