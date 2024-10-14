@@ -10,8 +10,32 @@ const App = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Game" component={GameScreen} />
+                <Stack.Screen 
+                    name="Home" 
+                    component={HomeScreen} 
+                    options={{
+                        title: 'Home',
+                        headerStyle: {
+                            height: 70
+                        },
+                        headerTitleStyle: {
+                            fontSize: 15
+                        },
+                        }}    
+                    />
+                <Stack.Screen 
+                    name="Game" 
+                    component={GameScreen} 
+                    options={{
+                        title: 'Game',
+                        headerStyle: {
+                            height: 70
+                        },
+                        headerTitleStyle: {
+                            fontSize: 15
+                        },
+                        }}
+                    />
             </Stack.Navigator>
         </NavigationContainer>
     );
