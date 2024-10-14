@@ -1,13 +1,25 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TouchableOpacity } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <Button
-                title="zacznij gre"
-                onPress={() => navigation.navigate("Game")}
-            />
+            <Text style={styles.title}>J E N G A</Text>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Game')}
+                style={styles.menu}>
+                <Text style={styles.menuText}>Start Game</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Menu')}
+                style={styles.menu}>
+                <Text style={styles.menuText}>Menu</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Options')}
+                style={styles.menu}>
+                <Text style={styles.menuText}>Options</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -22,12 +34,24 @@ const styles = {
         backgroundColor: 'white',
     },
     title: {
+        position: 'absolute',
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        top: 50,
     },
-    instructions: {
-        fontSize: 16,
+    menu: {
+        width: 200,
+        height: 50,
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
         marginBottom: 20,
+    },
+    menuText: {
+        color: 'white',
+        fontSize: 17,
+        fontWeight: 'bold',
     },
 }
