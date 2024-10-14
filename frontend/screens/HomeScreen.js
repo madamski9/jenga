@@ -4,7 +4,6 @@ import { View, Text, Button } from "react-native";
 const HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.instructions}>witaj</Text>
             <Button
                 title="zacznij gre"
                 onPress={() => navigation.navigate("Game")}
@@ -20,7 +19,7 @@ const styles = {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'black',
+        backgroundColor: 'white',
     },
     title: {
         fontSize: 24,

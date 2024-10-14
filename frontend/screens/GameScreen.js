@@ -1,14 +1,9 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TouchableOpacity } from "react-native";
 
 const GameScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.instructions}>gra</Text>
-            <Button
-                title="powrot"
-                onPress={() => navigation.navigate("Home")}
-            />
         </View>
     );
 }
@@ -20,7 +15,7 @@ const styles = {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'black',
+        backgroundColor: 'white',
     },
     title: {
         fontSize: 24,
