@@ -19,9 +19,18 @@ const JengaBlock = ({ block }) => {
     );
 }
 
+const Nawigacja = ({ number }) => {
+    return (
+        <TouchableOpacity>
+            <Text style={styles.nawigacja}>{'<  '}{number}{'  >'}</Text>
+        </TouchableOpacity>
+    )
+}
+
 const GameScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
+            <Nawigacja number={1} />
             <JengaBlock block={1} />
             <JengaBlock block={2} />
             <JengaBlock block={3} />
@@ -72,4 +81,11 @@ const styles = {
         borderColor: 'black',
         borderRadius: 4,
     },
+    nawigacja: {
+        position: 'absolute',
+        top: -80,
+        left: -25,
+        fontWeight: 'bold',
+        fontSize: 20,
+    }
 }
