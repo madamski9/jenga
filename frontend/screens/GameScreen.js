@@ -1,18 +1,18 @@
-import React from "react";
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import React, { useRef } from "react";
+import { View, Text, Button, TouchableOpacity, PanResponder, Animated } from "react-native";
 
 const JengaBlock = ({ block }) => {
     const isEven = block % 2 === 0;
     return (
         <View style={styles.row}>
-            <View style={isEven ? styles.blockEven : styles.blockOdd}>
-            </View>
+            <TouchableOpacity style={isEven ? styles.blockEven : styles.blockOdd}>
+            </TouchableOpacity>
             {isEven && (
                 <>
-                    <View style={styles.blockEven}>
-                    </View>
-                    <View style={styles.blockEven}>
-                    </View>
+                    <TouchableOpacity style={styles.blockEven}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.blockEven}>
+                    </TouchableOpacity>
                 </>
             )}
         </View>
