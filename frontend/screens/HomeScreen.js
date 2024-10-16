@@ -35,10 +35,10 @@ const styles = {
     },
     title: {
         position: 'absolute',
-        fontSize: 24,
+        fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20,
-        top: 50,
+        top: 80,
     },
     menu: {
         width: 200,
