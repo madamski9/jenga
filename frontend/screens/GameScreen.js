@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { View, Text, Button, TouchableOpacity, PanResponder, Animated } from "react-native";
 
 const JengaBlock = ({ block }) => {
@@ -19,19 +19,39 @@ const JengaBlock = ({ block }) => {
     );
 }
 
-const Prawo = () => <TouchableOpacity style={styles.prawo}><Text style={styles.nawigacja}>{'>'}</Text></TouchableOpacity>
+const Prawo = ({ onPress }) => <TouchableOpacity style={styles.prawo} onPress={onPress}><Text style={styles.nawigacja}>{'>'}</Text></TouchableOpacity>
 
-const Lewo = () => <TouchableOpacity style={styles.lewo}><Text style={styles.nawigacja}>{'<'}</Text></TouchableOpacity>
+const Lewo = ({ onPress }) => <TouchableOpacity style={styles.lewo} onPress={onPress}><Text style={styles.nawigacja}>{'<'}</Text></TouchableOpacity>
 
 const Cyfra = ({ number }) => <Text style={styles.cyfra}>{number}</Text>
 
 const GameScreen = ({ navigation }) => {
+    const [currNumber, setCurrNumber] = useState(1)
+    const handleLewoPress = () => {
+        setCurrNumber(prev => {
+            if (prev > 1 && prev <= 4) {
+                return prev - 1
+            } else {
+                return 4
+            }
+        })
+    };
+
+    const handlePrawoPress = () => {
+        setCurrNumber(prev => {
+            if (prev >= 1 && prev < 4) {
+                return prev + 1
+            } else {
+                return 1;
+            }
+        });
+    };
     return (
         <View style={styles.container}>
             <View style={styles.navigationRow}>
-                <Lewo />
-                <Cyfra number={1} />
-                <Prawo />
+                <Lewo onPress={handleLewoPress}/>
+                <Cyfra number={currNumber} />
+                <Prawo onPress={handlePrawoPress}/>
             </View>
             <JengaBlock block={1} />
             <JengaBlock block={2} />
