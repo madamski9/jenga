@@ -19,18 +19,20 @@ const JengaBlock = ({ block }) => {
     );
 }
 
-const Nawigacja = ({ number }) => {
-    return (
-        <TouchableOpacity>
-            <Text style={styles.nawigacja}>{'<  '}{number}{'  >'}</Text>
-        </TouchableOpacity>
-    )
-}
+const Prawo = () => <TouchableOpacity style={styles.prawo}><Text style={styles.nawigacja}>{'>'}</Text></TouchableOpacity>
+
+const Lewo = () => <TouchableOpacity style={styles.lewo}><Text style={styles.nawigacja}>{'<'}</Text></TouchableOpacity>
+
+const Cyfra = ({ number }) => <Text style={styles.cyfra}>{number}</Text>
 
 const GameScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <Nawigacja number={1} />
+            <View style={styles.navigationRow}>
+                <Lewo />
+                <Cyfra number={1} />
+                <Prawo />
+            </View>
             <JengaBlock block={1} />
             <JengaBlock block={2} />
             <JengaBlock block={3} />
@@ -83,9 +85,26 @@ const styles = {
     },
     nawigacja: {
         position: 'absolute',
-        top: -80,
-        left: -25,
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 50,
+    },
+    prawo: {
+        position: 'absolute',
+        top: 150,
+        right: -130,
+        fontWeight: 'bold',
+    },
+    lewo: {
+        position: 'absolute',
+        top: 150,
+        left: -160,
+        fontWeight: 'bold',
+    },
+    cyfra: {
+        position: 'absolute',
+        top: -95,
+        left: -6,
+        fontWeight: 'bold',
+        fontSize: 30,
     }
 }
