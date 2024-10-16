@@ -1,17 +1,29 @@
 import React, { useState } from "react";
-import { View, Text, Button, TouchableOpacity, PanResponder, Animated } from "react-native";
+import { View, Text, Button, TouchableOpacity} from "react-native";
 
-const JengaBlock = ({ block }) => {
+const JengaBlock = ({ block, isRemoved, onRemove }) => {
     const isEven = block % 2 === 0;
     return (
         <View style={styles.row}>
-            <TouchableOpacity style={isEven ? styles.blockEven : styles.blockOdd}>
+            <TouchableOpacity 
+                style={[isEven ? styles.blockEven : styles.blockOdd, isRemoved && styles.blockRemoved]}
+                onPress={() => onRemove(block)}
+                disabled={isRemoved}
+            >
             </TouchableOpacity>
             {isEven && (
                 <>
-                    <TouchableOpacity style={styles.blockEven}>
+                    <TouchableOpacity 
+                        style={[styles.blockEven, isRemoved && styles.blockRemoved]}
+                        onPress={() => onRemove(block + 1)}
+                        disabled={isRemoved}
+                    >
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.blockEven}>
+                    <TouchableOpacity 
+                        style={[styles.blockEven, isRemoved && styles.blockRemoved]}
+                        onPress={() => onRemove(block + 2)}
+                        disabled={isRemoved}
+                    >
                     </TouchableOpacity>
                 </>
             )}
@@ -27,25 +39,46 @@ const Cyfra = ({ number }) => <Text style={styles.cyfra}>{number}</Text>
 
 const GameScreen = ({ navigation }) => {
     const [currNumber, setCurrNumber] = useState(1)
+    const [removedBlocks, setRemovedBlocks] = useState([]);
+
     const handleLewoPress = () => {
         setCurrNumber(prev => {
+            let newNumber;
             if (prev > 1 && prev <= 4) {
-                return prev - 1
+                newNumber = prev - 1
             } else {
-                return 4
+                newNumber = 4
             }
+            return newNumber
         })
     };
 
     const handlePrawoPress = () => {
         setCurrNumber(prev => {
+            let newNumber;
             if (prev >= 1 && prev < 4) {
-                return prev + 1
+                newNumber = prev + 1;
             } else {
-                return 1;
+                newNumber = 1;
             }
+            return newNumber;
         });
     };
+    const generateBlocks = (currNumber) => {
+        let blocks = [];
+        let base = (currNumber - 1) * 3;
+        for (let i = 0; i < 12; i++) {
+            blocks.push(base + i * 3 + 1);
+        }
+        return blocks;
+    };
+
+    const handleRemoveBlock = (block) => {
+        setRemovedBlocks(prev => [...prev, block]);
+    };
+
+    const blocks = generateBlocks(currNumber);
+    
     return (
         <View style={styles.container}>
             <View style={styles.navigationRow}>
@@ -53,18 +86,17 @@ const GameScreen = ({ navigation }) => {
                 <Cyfra number={currNumber} />
                 <Prawo onPress={handlePrawoPress}/>
             </View>
-            <JengaBlock block={1} />
-            <JengaBlock block={2} />
-            <JengaBlock block={3} />
-            <JengaBlock block={4} />
-            <JengaBlock block={5} />
-            <JengaBlock block={6} />
-            <JengaBlock block={7} />
-            <JengaBlock block={8} />
-            <JengaBlock block={9} />
-            <JengaBlock block={10} />
-            <JengaBlock block={11} />
-            <JengaBlock block={12} />
+            {blocks.map((block, idx) => {
+                const isRemoved = removedBlocks.includes(block);
+                return (
+                    <JengaBlock
+                        key={idx}
+                        block={block}
+                        isRemoved={isRemoved}
+                        onRemove={handleRemoveBlock}
+                    />
+                );
+            })}
         </View>
     );
 }
@@ -82,6 +114,10 @@ const styles = {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    blockRemoved: {
+        backgroundColor: 'white',
+        borderColor: 'white',
     },
     blockOdd: {
         width: 195, 
