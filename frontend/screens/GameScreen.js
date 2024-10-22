@@ -7,10 +7,15 @@ const JengaBlock = ({ block, removedBlocks, onRemove }) => {
         return removedBlocks.some(elem => elem === block)
     }
     const getBlockStyle = (block) => {
+        const relatedBlocks = [1, 3, 5, 7, 9, 11, 13]
+        const blocks300 = [302, 304, 306, 308, 310, 312]
         if (isRemoved(block)) {
-            return block % 113 === 1 || block === 3 || block === 5 || block === 7 || block === 9 || block === 11 || block === 13 ? styles.blockRemovedSpecial : styles.blockRemoved;
+            if (relatedBlocks.includes(block)) {
+                return styles.blockRemovedSpecial
+            } else {
+                return styles.blockRemoved
+            }
         }
-        return isEven(block) ? styles.blockEven : styles.block;
     }
     return (
         <View style={styles.row}>
