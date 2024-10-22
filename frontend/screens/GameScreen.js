@@ -1,34 +1,48 @@
 import React, { useState } from "react";
 import { View, Text, Button, TouchableOpacity} from "react-native";
 
-const JengaBlock = ({ block, isRemoved, onRemove }) => {
-    const isEven = block % 2 === 0;
+const JengaBlock = ({ block, removedBlocks, onRemove }) => {
+    const isEven = (num) => num % 2 === 0;
+    const isRemoved = (block) => {
+        return removedBlocks.some(elem => elem === block)
+    }
     return (
         <View style={styles.row}>
-            <TouchableOpacity 
-                style={[isEven ? styles.blockEven : styles.blockOdd, isRemoved && styles.blockRemoved]}
-                onPress={() => onRemove(block)}
-                disabled={isRemoved}
-            >
-            </TouchableOpacity>
-            {isEven && (
+            {isEven(block) ? (
                 <>
-                    <TouchableOpacity 
-                        style={[styles.blockEven, isRemoved && styles.blockRemoved]}
-                        onPress={() => onRemove(block + 1)}
-                        disabled={isRemoved}
+                    <TouchableOpacity
+                    style={[styles.blockEven, isRemoved(block) && styles.blockRemoved]}
+                    onPress={() => onRemove(block)}
+                    disabled={isRemoved(block)}
                     >
+                        <Text style={styles.blockText}>{block}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={[styles.blockEven, isRemoved && styles.blockRemoved]}
-                        onPress={() => onRemove(block + 2)}
-                        disabled={isRemoved}
+                    <TouchableOpacity
+                    style={[styles.blockEven, isRemoved(block) && styles.blockRemoved]}
+                    onPress={() => onRemove(block)}
+                    disabled={isRemoved(block)}
                     >
+                        <Text style={styles.blockText}>{block}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={[styles.blockEven, isRemoved(block) && styles.blockRemoved]}
+                    onPress={() => onRemove(block)}
+                    disabled={isRemoved(block)}
+                    >
+                        <Text style={styles.blockText}>{block}</Text>
                     </TouchableOpacity>
                 </>
+            ) : (
+                <TouchableOpacity
+                style={[styles.block, isRemoved(block) && styles.blockRemoved]}
+                onPress={() => onRemove(block)}
+                disabled={isRemoved(block)}
+                >
+                    <Text style={styles.blockText}>{block}</Text>
+                </TouchableOpacity>
             )}
         </View>
-    );
+    )
 }
 
 const Prawo = ({ onPress }) => <TouchableOpacity style={styles.prawo} onPress={onPress}><Text style={styles.nawigacja}>{'>'}</Text></TouchableOpacity>
@@ -44,10 +58,10 @@ const GameScreen = ({ navigation }) => {
     const handleLewoPress = () => {
         setCurrNumber(prev => {
             let newNumber;
-            if (prev > 1 && prev <= 4) {
+            if (prev > 1 && prev <= 2) {
                 newNumber = prev - 1
             } else {
-                newNumber = 4
+                newNumber = 2
             }
             return newNumber
         })
@@ -56,7 +70,7 @@ const GameScreen = ({ navigation }) => {
     const handlePrawoPress = () => {
         setCurrNumber(prev => {
             let newNumber;
-            if (prev >= 1 && prev < 4) {
+            if (prev >= 1 && prev < 2) {
                 newNumber = prev + 1;
             } else {
                 newNumber = 1;
@@ -66,9 +80,9 @@ const GameScreen = ({ navigation }) => {
     };
     const generateBlocks = (currNumber) => {
         let blocks = [];
-        let base = (currNumber - 1) * 3;
+        let base = (currNumber - 1) * 12;
         for (let i = 0; i < 12; i++) {
-            blocks.push(base + i * 3 + 1);
+            blocks.push(base + i + 1);
         }
         return blocks;
     };
@@ -87,12 +101,11 @@ const GameScreen = ({ navigation }) => {
                 <Prawo onPress={handlePrawoPress}/>
             </View>
             {blocks.map((block, idx) => {
-                const isRemoved = removedBlocks.includes(block);
                 return (
                     <JengaBlock
                         key={idx}
                         block={block}
-                        isRemoved={isRemoved}
+                        removedBlocks={removedBlocks}
                         onRemove={handleRemoveBlock}
                     />
                 );
@@ -119,8 +132,8 @@ const styles = {
         backgroundColor: 'white',
         borderColor: 'white',
     },
-    blockOdd: {
-        width: 195, 
+    blockEven: {
+        width: 65,
         height: 35,
         backgroundColor: 'rgb(255,205,129)',
         justifyContent: 'center',
@@ -129,8 +142,8 @@ const styles = {
         borderColor: 'black',
         borderRadius: 4,
     },
-    blockEven: {
-        width: 65,
+    block: {
+        width: 195,
         height: 35,
         backgroundColor: 'rgb(255,205,129)',
         justifyContent: 'center',
