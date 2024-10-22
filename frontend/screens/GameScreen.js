@@ -6,35 +6,41 @@ const JengaBlock = ({ block, removedBlocks, onRemove }) => {
     const isRemoved = (block) => {
         return removedBlocks.some(elem => elem === block)
     }
+    const getBlockStyle = (block) => {
+        if (isRemoved(block)) {
+            return block % 113 === 1 || block === 3 || block === 5 || block === 7 || block === 9 || block === 11 || block === 13 ? styles.blockRemovedSpecial : styles.blockRemoved;
+        }
+        return isEven(block) ? styles.blockEven : styles.block;
+    }
     return (
         <View style={styles.row}>
             {isEven(block) ? (
                 <>
                     <TouchableOpacity
-                    style={[styles.blockEven, isRemoved(block) && styles.blockRemoved]}
+                    style={[styles.blockEven, isRemoved(block) && getBlockStyle(block)]}
                     onPress={() => onRemove(block)}
                     disabled={isRemoved(block)}
                     >
-                        <Text style={styles.blockText}>{block}</Text>
+                        <Text style={styles.blockText}>{block+100}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                    style={[styles.blockEven, isRemoved(block) && styles.blockRemoved]}
-                    onPress={() => onRemove(block)}
+                    style={[styles.blockEven, isRemoved(block+100) && getBlockStyle(block)]}
+                    onPress={() => onRemove(block+100)}
                     disabled={isRemoved(block)}
                     >
-                        <Text style={styles.blockText}>{block}</Text>
+                        <Text style={styles.blockText}>{block+200}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                    style={[styles.blockEven, isRemoved(block) && styles.blockRemoved]}
-                    onPress={() => onRemove(block)}
+                    style={[styles.blockEven, isRemoved(block+200) && getBlockStyle(block)]}
+                    onPress={() => onRemove(block+200)}
                     disabled={isRemoved(block)}
                     >
-                        <Text style={styles.blockText}>{block}</Text>
+                        <Text style={styles.blockText}>{block+300}</Text>
                     </TouchableOpacity>
                 </>
             ) : (
                 <TouchableOpacity
-                style={[styles.block, isRemoved(block) && styles.blockRemoved]}
+                style={[styles.block, isRemoved(block) && getBlockStyle(block)]}
                 onPress={() => onRemove(block)}
                 disabled={isRemoved(block)}
                 >
@@ -81,14 +87,30 @@ const GameScreen = ({ navigation }) => {
     const generateBlocks = (currNumber) => {
         let blocks = [];
         let base = (currNumber - 1) * 12;
-        for (let i = 0; i < 12; i++) {
-            blocks.push(base + i + 1);
+        if (currNumber === 1) {
+            for (let i = 0; i <= 12; i++) {
+                blocks.push(base + i + 1);
+            }
+        } else {
+            for (let i = 0; i <= 12; i++) {
+                blocks.push(base + i + 2);
+            }
         }
-        return blocks;
+        return blocks
     };
 
     const handleRemoveBlock = (block) => {
-        setRemovedBlocks(prev => [...prev, block]);
+        const relatedBlocks = [1, 3, 5, 7, 9, 11, 13]
+        if (relatedBlocks.includes(block)) {
+            setRemovedBlocks(prev => {
+                console.log(block)
+                return [...prev, block, block + 13]
+            })
+        } else {    
+            setRemovedBlocks(prev => {
+                return [...prev, block, block - 187]
+            })
+        }
     };
 
     const blocks = generateBlocks(currNumber);
@@ -130,7 +152,17 @@ const styles = {
     },
     blockRemoved: {
         backgroundColor: 'white',
-        borderColor: 'white',
+        borderColor: "white"
+    },
+    blockRemovedSpecial: {
+        width: 185,
+        height: 35,
+        backgroundColor: 'rgb(238,191,121)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 4,
     },
     blockEven: {
         width: 65,
