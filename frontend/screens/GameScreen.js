@@ -9,35 +9,42 @@ const JengaBlock = ({ block, removedBlocks, onRemove }) => {
     const getBlockStyle = (block) => {
         const relatedBlocks = [1, 3, 5, 7, 9, 11, 13]
         const blocks300 = [302, 304, 306, 308, 310, 312]
+        const blocks200 = [202, 204, 206, 208, 210, 212]
+        const blocks100 = [102, 104, 106, 108, 110, 112]
         if (isRemoved(block)) {
             if (relatedBlocks.includes(block)) {
                 return styles.blockRemovedSpecial
-            } else {
+            } else if (blocks300.includes(block) || blocks200.includes(block) || blocks100.includes(block)) {
                 return styles.blockRemoved
+            } else if (relatedBlocks.includes(block - 113)) {
+                return styles.blockRemoved
+            } else {
+                return styles.blockRemovedSpecial
             }
         }
+        return isEven(block) ? styles.blockEven : styles.block;
     }
     return (
         <View style={styles.row}>
             {isEven(block) ? (
                 <>
                     <TouchableOpacity
-                    style={[styles.blockEven, isRemoved(block) && getBlockStyle(block)]}
-                    onPress={() => onRemove(block)}
+                    style={[styles.blockEven, isRemoved(block+100) && getBlockStyle(block+100)]}
+                    onPress={() => onRemove(block+100)}
                     disabled={isRemoved(block)}
                     >
                         <Text style={styles.blockText}>{block+100}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                    style={[styles.blockEven, isRemoved(block+100) && getBlockStyle(block)]}
-                    onPress={() => onRemove(block+100)}
+                    style={[styles.blockEven, isRemoved(block+200) && getBlockStyle(block+200)]}
+                    onPress={() => onRemove(block+200)}
                     disabled={isRemoved(block)}
                     >
                         <Text style={styles.blockText}>{block+200}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                    style={[styles.blockEven, isRemoved(block+200) && getBlockStyle(block)]}
-                    onPress={() => onRemove(block+200)}
+                    style={[styles.blockEven, isRemoved(block+300) && getBlockStyle(block+300)]}
+                    onPress={() => onRemove(block+300)}
                     disabled={isRemoved(block)}
                     >
                         <Text style={styles.blockText}>{block+300}</Text>
@@ -106,14 +113,21 @@ const GameScreen = ({ navigation }) => {
 
     const handleRemoveBlock = (block) => {
         const relatedBlocks = [1, 3, 5, 7, 9, 11, 13]
+        const blocks300 = [302, 304, 306, 308, 310, 312]
         if (relatedBlocks.includes(block)) {
             setRemovedBlocks(prev => {
                 console.log(block)
-                return [...prev, block, block + 13]
+                return [...prev, block, block + 113]
             })
-        } else {    
+        } else if (blocks300.includes(block)) {
             setRemovedBlocks(prev => {
-                return [...prev, block, block - 187]
+                console.log(block)
+                return [...prev, block, block - 287]
+            })
+        } else {
+            setRemovedBlocks(prev => {
+                console.log(block)
+                return [...prev, block]
             })
         }
     };
@@ -162,7 +176,7 @@ const styles = {
     blockRemovedSpecial: {
         width: 185,
         height: 35,
-        backgroundColor: 'rgb(238,191,121)',
+        backgroundColor: 'rgb(199,160,101)',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
