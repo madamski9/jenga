@@ -1,29 +1,64 @@
 import React, { useState } from "react";
 import { View, Text, Button, TouchableOpacity} from "react-native";
 
-const JengaBlock = ({ block, removedBlocks, onRemove }) => {
+const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setRemovedBlocks}) => {
     const isEven = (num) => num % 2 === 0;
     const isRemoved = (block) => {
         return removedBlocks.some(elem => elem === block)
     }
     const getBlockStyle = (block) => {
-        const relatedBlocks = [1, 3, 5, 7, 9, 11, 13]
-        const blocks300 = [302, 304, 306, 308, 310, 312]
-        const blocks200 = [202, 204, 206, 208, 210, 212]
-        const blocks100 = [102, 104, 106, 108, 110, 112]
+        const relatedBlocks = [1, 3, 5, 7, 9, 11, 13];
+        const relatedBlocks2 = [15, 17, 19, 21, 23, 25];
+        const blocks300 = [302, 304, 306, 308, 310, 312, 314, 316, 318, 320, 322, 324, 326];
+        const blocks200 = [202, 204, 206, 208, 210, 212];
+        const blocks200_2 = [214, 216, 218, 220, 222, 224, 226];
+        const blocks100 = [102, 104, 106, 108, 110, 112];
+        const blocks100_2 = [114, 116, 118, 120, 122, 124, 126];
+    
         if (isRemoved(block)) {
             if (relatedBlocks.includes(block)) {
-                return styles.blockRemovedSpecial
+                console.log(block, "usuniete");
+                if (isRemoved(block + 113) && !isRemoved(block + 213) && !isRemoved(block + 313)) {
+                    return styles.blockRemovedSpecial;
+                } 
+                else if (isRemoved(block + 113) && !isRemoved(block + 213) && isRemoved(block + 313)) {
+                    return styles.blockRemovedSpecial
+                }
+                else if (isRemoved(block + 113) && isRemoved(block + 213) && !isRemoved(block + 313)) {
+                    return styles.blockRemovedMoreSpecial;
+                } 
+                else if (isRemoved(block + 113) && isRemoved(block + 213) && isRemoved(block + 313)) {
+                    return styles.blockRemoved;
+                }
+            } else if (relatedBlocks2.includes(block)) {
+                console.log(block, "usuniete2");
+                if (isRemoved(block + 287) && !isRemoved(block + 187) && !isRemoved(block + 87)) {
+                    return styles.blockRemovedSpecial;
+                } 
+                else if (isRemoved(block + 287) && !isRemoved(block + 187) && isRemoved(block + 87)) {
+                    return styles.blockRemovedSpecial
+                }
+                else if (isRemoved(block + 287) && isRemoved(block + 187) && !isRemoved(block + 87)) {
+                    return styles.blockRemovedMoreSpecial;
+                } 
+                else if (isRemoved(block + 287) && isRemoved(block + 187) && isRemoved(block + 87)) {
+                    return styles.blockRemoved;
+                }
             } else if (blocks300.includes(block) || blocks200.includes(block) || blocks100.includes(block)) {
-                return styles.blockRemoved
+                console.log(block, "usuniete");
+                return styles.blockRemoved;
+            } else if (blocks200_2.includes(block)) {
+                return styles.blockRemoved;
+            } else if (blocks100_2.includes(block)) {
+                return styles.blockRemoved;
             } else if (relatedBlocks.includes(block - 113)) {
-                return styles.blockRemoved
+                return styles.blockRemovedSpecial;
             } else {
-                return styles.blockRemovedSpecial
+                return styles.blockRemovedSpecial;
             }
         }
         return isEven(block) ? styles.blockEven : styles.block;
-    }
+    };
     return (
         <View style={styles.row}>
             {isEven(block) ? (
@@ -33,21 +68,18 @@ const JengaBlock = ({ block, removedBlocks, onRemove }) => {
                     onPress={() => onRemove(block+100)}
                     disabled={isRemoved(block)}
                     >
-                        <Text style={styles.blockText}>{block+100}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={[styles.blockEven, isRemoved(block+200) && getBlockStyle(block+200)]}
                     onPress={() => onRemove(block+200)}
                     disabled={isRemoved(block)}
                     >
-                        <Text style={styles.blockText}>{block+200}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={[styles.blockEven, isRemoved(block+300) && getBlockStyle(block+300)]}
                     onPress={() => onRemove(block+300)}
                     disabled={isRemoved(block)}
                     >
-                        <Text style={styles.blockText}>{block+300}</Text>
                     </TouchableOpacity>
                 </>
             ) : (
@@ -56,7 +88,6 @@ const JengaBlock = ({ block, removedBlocks, onRemove }) => {
                 onPress={() => onRemove(block)}
                 disabled={isRemoved(block)}
                 >
-                    <Text style={styles.blockText}>{block}</Text>
                 </TouchableOpacity>
             )}
         </View>
@@ -72,6 +103,7 @@ const Cyfra = ({ number }) => <Text style={styles.cyfra}>{number}</Text>
 const GameScreen = ({ navigation }) => {
     const [currNumber, setCurrNumber] = useState(1)
     const [removedBlocks, setRemovedBlocks] = useState([]);
+    const [removedRelatedBlocks, setRemovedRelatedBlocks] = useState([]);
 
     const handleLewoPress = () => {
         setCurrNumber(prev => {
@@ -112,23 +144,33 @@ const GameScreen = ({ navigation }) => {
     };
 
     const handleRemoveBlock = (block) => {
-        const relatedBlocks = [1, 3, 5, 7, 9, 11, 13]
-        const blocks300 = [302, 304, 306, 308, 310, 312]
+        const relatedBlocks = [1, 3, 5, 7, 9, 11, 13];
+        const relatedBlocks2 = [15, 17, 19, 21, 23, 25];
+        const blocks200_2 = [214, 216, 218, 220, 222, 224, 226];
+        const blocks300 = [314, 316, 318, 320, 322, 324, 326];
+        const block300_2 = [302, 304, 306, 308, 310, 312];
+        const blocks100_2 = [114, 116, 118, 120, 122, 124, 126];
+
         if (relatedBlocks.includes(block)) {
-            setRemovedBlocks(prev => {
-                console.log(block)
-                return [...prev, block, block + 113]
-            })
+            setRemovedRelatedBlocks(prev => [...prev, block]);
+            setRemovedBlocks(prev => [...prev, block, block + 113]);
+        } else if (relatedBlocks2.includes(block)) {
+            setRemovedRelatedBlocks(prev => [...prev, block]);
+            setRemovedBlocks(prev => [...prev, block, block + 287]);
+        } else if (blocks200_2.includes(block)) {
+            console.log("200 usuniete");
+            setRemovedBlocks(prev => [...prev, block]);
+            setRemovedRelatedBlocks(prev => prev.map(elem => elem));
         } else if (blocks300.includes(block)) {
-            setRemovedBlocks(prev => {
-                console.log(block)
-                return [...prev, block, block - 287]
-            })
+            setRemovedBlocks(prev => [...prev, block]);
+        } else if (block300_2.includes(block)) {
+            console.log("300")
+            setRemovedBlocks(prev => [...prev, block, block - 287]);
+        } else if (blocks100_2.includes(block)) {
+            console.log("100");
+            setRemovedBlocks(prev => [...prev, block, block - 113]);
         } else {
-            setRemovedBlocks(prev => {
-                console.log(block)
-                return [...prev, block]
-            })
+            setRemovedBlocks(prev => [...prev, block]);
         }
     };
 
@@ -148,6 +190,8 @@ const GameScreen = ({ navigation }) => {
                         block={block}
                         removedBlocks={removedBlocks}
                         onRemove={handleRemoveBlock}
+                        removedRelatedBlocks={removedRelatedBlocks}
+                        setRemovedBlocks={setRemovedBlocks}
                     />
                 );
             })}
@@ -174,9 +218,19 @@ const styles = {
         borderColor: "white"
     },
     blockRemovedSpecial: {
-        width: 185,
+        width: 187,
         height: 35,
         backgroundColor: 'rgb(199,160,101)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 4,
+    },
+    blockRemovedMoreSpecial: {
+        width: 183,
+        height: 35,
+        backgroundColor: 'rgb(148,119,75)',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
