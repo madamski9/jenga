@@ -2,4 +2,4 @@
 jenga gra na telefon 
 
 
-Jan Gasztold
+Maciej Adamski
