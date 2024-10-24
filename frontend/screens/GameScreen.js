@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Button, TouchableOpacity} from "react-native";
 
-const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setRemovedBlocks}) => {
+const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setRemovedBlocks, eliminationBlocks, setEliminationBlocks}) => {
     const isEven = (num) => num % 2 === 0;
     const isRemoved = (block) => {
         return removedBlocks.some(elem => elem === block)
@@ -14,7 +14,7 @@ const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setR
         const blocks200_2 = [214, 216, 218, 220, 222, 224, 226];
         const blocks100 = [102, 104, 106, 108, 110, 112];
         const blocks100_2 = [114, 116, 118, 120, 122, 124, 126];
-    
+
         if (isRemoved(block)) {
             if (relatedBlocks.includes(block)) {
                 console.log(block, "usuniete");
@@ -22,6 +22,8 @@ const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setR
                     return styles.blockRemovedSpecial;
                 } 
                 else if (isRemoved(block + 113) && !isRemoved(block + 213) && isRemoved(block + 313)) {
+                    eliminationBlocks.push(block + 213)
+                    console.log(eliminationBlocks, "eliminacja");
                     return styles.blockRemovedSpecial
                 }
                 else if (isRemoved(block + 113) && isRemoved(block + 213) && !isRemoved(block + 313)) {
@@ -68,18 +70,21 @@ const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setR
                     onPress={() => onRemove(block+100)}
                     disabled={isRemoved(block)}
                     >
+                    <Text>{block+100}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={[styles.blockEven, isRemoved(block+200) && getBlockStyle(block+200)]}
                     onPress={() => onRemove(block+200)}
                     disabled={isRemoved(block)}
                     >
+                    <Text>{block+200}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={[styles.blockEven, isRemoved(block+300) && getBlockStyle(block+300)]}
                     onPress={() => onRemove(block+300)}
                     disabled={isRemoved(block)}
                     >
+                    <Text>{block+300}</Text>
                     </TouchableOpacity>
                 </>
             ) : (
@@ -88,6 +93,7 @@ const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setR
                 onPress={() => onRemove(block)}
                 disabled={isRemoved(block)}
                 >
+                <Text>{block}</Text>
                 </TouchableOpacity>
             )}
         </View>
@@ -101,9 +107,10 @@ const Lewo = ({ onPress }) => <TouchableOpacity style={styles.lewo} onPress={onP
 const Cyfra = ({ number }) => <Text style={styles.cyfra}>{number}</Text>
 
 const GameScreen = ({ navigation }) => {
-    const [currNumber, setCurrNumber] = useState(1)
-    const [removedBlocks, setRemovedBlocks] = useState([]);
-    const [removedRelatedBlocks, setRemovedRelatedBlocks] = useState([]);
+    const [ currNumber, setCurrNumber ] = useState(1)
+    const [ removedBlocks, setRemovedBlocks ] = useState([]);
+    const [ removedRelatedBlocks, setRemovedRelatedBlocks ] = useState([]);
+    const [ eliminationBlocks, setEliminationBlocks ] = useState([]);
 
     const handleLewoPress = () => {
         setCurrNumber(prev => {
@@ -158,16 +165,13 @@ const GameScreen = ({ navigation }) => {
             setRemovedRelatedBlocks(prev => [...prev, block]);
             setRemovedBlocks(prev => [...prev, block, block + 287]);
         } else if (blocks200_2.includes(block)) {
-            console.log("200 usuniete");
             setRemovedBlocks(prev => [...prev, block]);
             setRemovedRelatedBlocks(prev => prev.map(elem => elem));
         } else if (blocks300.includes(block)) {
             setRemovedBlocks(prev => [...prev, block]);
         } else if (block300_2.includes(block)) {
-            console.log("300")
             setRemovedBlocks(prev => [...prev, block, block - 287]);
         } else if (blocks100_2.includes(block)) {
-            console.log("100");
             setRemovedBlocks(prev => [...prev, block, block - 113]);
         } else {
             setRemovedBlocks(prev => [...prev, block]);
@@ -179,9 +183,8 @@ const GameScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.navigationRow}>
-                <Lewo onPress={handleLewoPress}/>
+            {currNumber === 1 ? ( <Prawo onPress={handlePrawoPress}/> ) : ( <Lewo onPress={handleLewoPress}/> )}
                 <Cyfra number={currNumber} />
-                <Prawo onPress={handlePrawoPress}/>
             </View>
             {blocks.map((block, idx) => {
                 return (
@@ -192,6 +195,8 @@ const GameScreen = ({ navigation }) => {
                         onRemove={handleRemoveBlock}
                         removedRelatedBlocks={removedRelatedBlocks}
                         setRemovedBlocks={setRemovedBlocks}
+                        eliminationBlocks={eliminationBlocks}
+                        setEliminationBlocks={setEliminationBlocks}
                     />
                 );
             })}
