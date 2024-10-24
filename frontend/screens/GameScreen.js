@@ -22,8 +22,6 @@ const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setR
                     return styles.blockRemovedSpecial;
                 } 
                 else if (isRemoved(block + 113) && !isRemoved(block + 213) && isRemoved(block + 313)) {
-                    eliminationBlocks.push(block + 213)
-                    console.log(eliminationBlocks, "eliminacja");
                     return styles.blockRemovedSpecial
                 }
                 else if (isRemoved(block + 113) && isRemoved(block + 213) && !isRemoved(block + 313)) {
@@ -47,7 +45,11 @@ const JengaBlock = ({ block, removedBlocks, onRemove, removedRelatedBlocks, setR
                     return styles.blockRemoved;
                 }
             } else if (blocks300.includes(block) || blocks200.includes(block) || blocks100.includes(block)) {
-                console.log(block, "usuniete");
+                console.log(block, "usunieteabcd");
+                if (isRemoved(block - 200) || isRemoved(block + 200)) {
+                    eliminationBlocks.push(block + 100)
+                    console.log(eliminationBlocks, "eliminacja");
+                }
                 return styles.blockRemoved;
             } else if (blocks200_2.includes(block)) {
                 return styles.blockRemoved;
