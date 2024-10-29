@@ -24,15 +24,15 @@ export const handlePrawoPress = (setCurrNumber) => {
 };
 export const generateBlocks = (currNumber) => {
     let blocks = [];
-    let base = (currNumber - 1) * 12;
+    let base = (currNumber - 1) * 12; 
     if (currNumber === 1) {
         for (let i = 0; i <= 12; i++) {
             blocks.push(base + i + 1);
         }
-    } else {
+    } else if(currNumber === 2){
         for (let i = 0; i <= 12; i++) {
-            blocks.push(base + i + 2);
+            blocks.push(base + i + 2); 
         }
-    }
-    return blocks
+    } 
+    return blocks;
 };

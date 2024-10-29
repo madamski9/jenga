@@ -77,7 +77,27 @@ const styles = {
         left: -6,
         fontWeight: 'bold',
         fontSize: 30,
-    }
+    },
+    placeBlockEven: {
+        width: 65,
+        height: 35,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 4,
+    },
+    placeBlock: {
+        width: 195,
+        height: 35,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 4,
+    },
 }
 
 export default styles;
