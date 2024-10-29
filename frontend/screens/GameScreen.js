@@ -12,7 +12,6 @@ const Cyfra = ({ number }) => <Text style={styles.cyfra}>{number}</Text>
 const GameScreen = ({ navigation }) => {
     const [ currNumber, setCurrNumber ] = useState(1)
     const [ removedBlocks, setRemovedBlocks ] = useState([]);
-    const [ removedRelatedBlocks, setRemovedRelatedBlocks ] = useState([]);
 
     const JengaBlock = ({ block, removedBlocks, onRemove }) => {
         const getBlockStyle = (block) => {
@@ -66,7 +65,6 @@ const GameScreen = ({ navigation }) => {
                     return styles.blockRemovedSpecial;
                 }
             }
-            return isEven(block) ? styles.blockEven : styles.block;
         };
         const isRemoved = (block) => {
             return removedBlocks.some(elem => elem === block)
@@ -119,15 +117,10 @@ const GameScreen = ({ navigation }) => {
         const blocks100_2 = [114, 116, 118, 120, 122, 124, 126];
 
         if (relatedBlocks.includes(block)) {
-            setRemovedRelatedBlocks(prev => [...prev, block]);
             setRemovedBlocks(prev => [...prev, block, block + 113]);
         } else if (relatedBlocks2.includes(block)) {
-            setRemovedRelatedBlocks(prev => [...prev, block]);
             setRemovedBlocks(prev => [...prev, block, block + 287]);
-        } else if (blocks200_2.includes(block)) {
-            setRemovedBlocks(prev => [...prev, block]);
-            setRemovedRelatedBlocks(prev => prev.map(elem => elem));
-        } else if (blocks300.includes(block)) {
+        } else if (blocks200_2.includes(block) || blocks300.includes(block)) {
             setRemovedBlocks(prev => [...prev, block]);
         } else if (block300_2.includes(block)) {
             setRemovedBlocks(prev => [...prev, block, block - 287]);
@@ -156,8 +149,6 @@ const GameScreen = ({ navigation }) => {
                     block={block}
                     removedBlocks={removedBlocks}
                     onRemove={handleRemoveBlock}
-                    removedRelatedBlocks={removedRelatedBlocks}
-                    setRemovedRelatedBlocks={setRemovedRelatedBlocks}
                 />
             ))}
         </View>
