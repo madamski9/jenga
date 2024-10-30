@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity} from "react-native";
-import { generateBlocks, isEven, handleLewoPress, handlePrawoPress, handleRemoveBlock } from "./GameScreenFunctions";
-import styles from "./GameScreenStyles";
-import { getBlockStyle } from "./getBlockStyle";
+import React, { useState } from "react"
+import { View, Text, TouchableOpacity} from "react-native"
+import { generateBlocks, isEven, handleLewoPress, handlePrawoPress, handleRemoveBlock } from "./GameScreenFunctions"
+import styles from "./GameScreenStyles"
+import { getBlockStyle } from "./getBlockStyle"
 
 const Prawo = ({ onPress }) => 
     <TouchableOpacity style={styles.prawo} onPress={onPress}>
@@ -20,8 +20,8 @@ const Cyfra = ({ number }) => <Text style={styles.cyfra}>{number}</Text>
 
 const GameScreen = () => {
     const [ currNumber, setCurrNumber ] = useState(1)
-    const [ removedBlocks, setRemovedBlocks ] = useState([]);
-    const [ newBlocks, setNewBlocks ] = useState([]);
+    const [ removedBlocks, setRemovedBlocks ] = useState([])
+    const [ newBlocks, setNewBlocks ] = useState([])
     const [ blockNum, setBlockNum ] = useState(1)
     const [ clickableBlocks, setClickableBlocks ] = useState([])
     const [ onlyNewBlocksClickable, setOnlyNewBlocksClickable ] = useState(false)
@@ -33,7 +33,7 @@ const GameScreen = () => {
     const JengaBlock = ({ block, onRemove, newBlocks, isNew, isClickable, onBlockClick }) => {
         const blockStyle = isNew
             ? (block % 2 !== 0 ? styles.placeBlock : styles.placeBlockEven)
-            : (block % 2 !== 0 ? styles.block : styles.blockEven);
+            : (block % 2 !== 0 ? styles.block : styles.blockEven)
         return (
             <View style={styles.row}>
                 {isEven(block) ? (
@@ -42,10 +42,8 @@ const GameScreen = () => {
                             style={[blockStyle, isRemoved(block+100) && getBlockStyle(block+100, isRemoved)]}
                             onPress={() => {
                                 if (isClickable) {
-                                    onBlockClick(block+100);
+                                    onBlockClick(block+100)
                                 }
-                                // onRemove(block+100, setRemovedBlocks);
-                                // newBlocks(block+100);
                             }}
                             disabled={isRemoved(block)}
                         >
@@ -55,10 +53,8 @@ const GameScreen = () => {
                             style={[blockStyle, isRemoved(block+200) && getBlockStyle(block+200, isRemoved)]}
                             onPress={() => {
                                 if (isClickable) {
-                                    onBlockClick(block+200);
+                                    onBlockClick(block+200)
                                 }
-                                // onRemove(block+200, setRemovedBlocks);
-                                // newBlocks(block+200);
                             }}
                             disabled={isRemoved(block)}
                         >
@@ -68,10 +64,8 @@ const GameScreen = () => {
                             style={[blockStyle, isRemoved(block+300) && getBlockStyle(block+300, isRemoved)]}
                             onPress={() => {
                                 if (isClickable) {
-                                    onBlockClick(block+300);
+                                    onBlockClick(block+300)
                                 }
-                                // onRemove(block+300, setRemovedBlocks);
-                                // newBlocks(block+300);
                             }}
                             disabled={isRemoved(block)}
                         >
@@ -83,10 +77,8 @@ const GameScreen = () => {
                         style={[blockStyle, isRemoved(block) && getBlockStyle(block, isRemoved)]}
                         onPress={() => {
                             if (isClickable) {
-                                onBlockClick(block);
+                                onBlockClick(block)
                             }
-                                // onRemove(block, setRemovedBlocks);
-                                // newBlocks(block);
                             }}
                         disabled={isRemoved(block)}
                     >
@@ -97,45 +89,45 @@ const GameScreen = () => {
         )
     }
 
-    const blocks = generateBlocks(currNumber);
-
     const handleNewBlocks = (block) => {
         console.log(block)
-        setNewBlocks(prev => [blockNum+1001, ...prev])
-        setClickableBlocks([blockNum+1001])
+        setNewBlocks(prev => [blockNum + 1001, ...prev])
+        setClickableBlocks([blockNum + 1001])
         setBlockNum(prev => prev + 1)
-        setOnlyNewBlocksClickable(true)
+        setOnlyNewBlocksClickable(true) // mozna kliknac tylko w nowe bloki
     }
 
     const handlePlaceBlock = (block) => {
-        setNewBlocks(prev => prev.filter(item => item !== block));
-        setClickableBlocks([]);
-        setOnlyNewBlocksClickable(false); // Resetowanie po umieszczeniu nowego bloku
-    };
+        setNewBlocks(prev => prev.filter(item => item !== block))
+        setClickableBlocks([])
+        setOnlyNewBlocksClickable(false) // resetowanie
+    }
 
     const handleBlockClick = (block) => {
         if (onlyNewBlocksClickable && block < 1000) {
-            return; // Ignorowanie kliknięć na stare bloki, gdy można kliknąć tylko nowe bloki
+            return
         }
         if (block >= 1000) {
-            handlePlaceBlock(block);
+            handlePlaceBlock(block)
         } else {
-            handleRemoveBlock(block, setRemovedBlocks);
-            handleNewBlocks(block);
+            handleRemoveBlock(block, setRemovedBlocks)
+            handleNewBlocks(block)
         }
-    };
+    }
+
+    const blocks = generateBlocks(currNumber)
 
     return (
         <View style={styles.container}>
             <View style={styles.navigationRow}>
                 {currNumber === 1 ? (
-                    <Prawo onPress={() => handlePrawoPress(setCurrNumber)} />
+                    <Prawo onPress={() => setCurrNumber(currNumber + 1)} />
                 ) : (
-                    <Lewo onPress={() => handleLewoPress(setCurrNumber)} />
+                    <Lewo onPress={() => setCurrNumber(currNumber - 1)} />
                 )}
                 <Cyfra number={currNumber} />
             </View>
-            {newBlocks.map((block ,idx) => (
+            {newBlocks.map((block, idx) => (
                 <JengaBlock
                     key={`new-${idx}`}
                     block={block}
@@ -158,8 +150,8 @@ const GameScreen = () => {
                 />
             ))}
         </View>
-    );
-};
+    )
+}
 
-export default GameScreen;
+export default GameScreen
 
