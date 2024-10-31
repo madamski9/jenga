@@ -46,7 +46,7 @@ const GameScreen = () => {
                                     onBlockClick(block+100)
                                 }
                             }}
-                            disabled={isRemoved(block)}
+                            disabled={isRemoved(block+100)}
                         >
                             <Text>{block+100}</Text>
                         </TouchableOpacity>
@@ -57,7 +57,7 @@ const GameScreen = () => {
                                     onBlockClick(block+200)
                                 }
                             }}
-                            disabled={isRemoved(block)}
+                            disabled={isRemoved(block+200)}
                         >
                             <Text>{block+200}</Text>
                         </TouchableOpacity>
@@ -68,7 +68,7 @@ const GameScreen = () => {
                                     onBlockClick(block+300)
                                 }
                             }}
-                            disabled={isRemoved(block)}
+                            disabled={isRemoved(block+300)}
                         >
                             <Text>{block+300}</Text>
                         </TouchableOpacity>
@@ -99,7 +99,7 @@ const GameScreen = () => {
     }
 
     const handlePlaceBlock = (block) => {
-        //console.log(block)
+        console.log(block)
         setNewBlocks(prev => prev.filter(item => item !== block))
         setClickableBlocks([])
         setOnlyNewBlocksClickable(false) // resetowanie
@@ -120,7 +120,7 @@ const GameScreen = () => {
     }
 
     const blocks = generateBlocks(currNumber)
-
+    console.log(newBlocks)
     return (
         <View style={styles.container}>
             <View style={styles.navigationRow}>
@@ -131,7 +131,7 @@ const GameScreen = () => {
                 )}
                 <Cyfra number={currNumber} />
             </View>
-            {newBlocks.map((block, idx) => (
+            {currNumber === 1 ? (newBlocks.map((block, idx) => (
                 <JengaBlock
                     key={`new-${idx}`}
                     block={block}
@@ -139,7 +139,14 @@ const GameScreen = () => {
                     isClickable={true}
                     onBlockClick={handleBlockClick}
                 />
-            ))}
+            ))) : (newBlocks.map((block, idx) => (
+                <JengaBlock
+                    key={`new-${idx}`}
+                    block={block + 101}
+                    isNew={true}
+                    isClickable={true}
+                    onBlockClick={handleBlockClick}
+                />)))}
             {blocks.map((block, idx) => (
                 <JengaBlock
                     key={idx}
