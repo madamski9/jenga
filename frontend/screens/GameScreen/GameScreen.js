@@ -26,6 +26,7 @@ const GameScreen = () => {
     const [ clickableBlocks, setClickableBlocks ] = useState([])
     const [ onlyNewBlocksClickable, setOnlyNewBlocksClickable ] = useState(false)
     const [ clickedBlocks, setClickedBlocks ] = useState([])
+    const [ newFloor, setNewFloor ] = useState(false);
 
     const isRemoved = (block) => {
         return removedBlocks.some(elem => elem === block)
@@ -96,6 +97,7 @@ const GameScreen = () => {
         setClickableBlocks([blockNum + 1001])
         setBlockNum(prev => prev + 1)
         setOnlyNewBlocksClickable(true) // mozna kliknac tylko w nowe bloki
+        setNewFloor(true)
     }
 
     const handlePlaceBlock = (block) => {
@@ -103,6 +105,11 @@ const GameScreen = () => {
         setClickableBlocks([])
         setOnlyNewBlocksClickable(false) // resetowanie
         handleRemoveBlock(block, setRemovedBlocks)
+        setNewFloor(false)
+
+        const floor = Math.floor(block / 1000) * 1000;
+        const blocksOnSameFloor = [floor + 1, floor + 2, floor + 3];
+        setRemovedBlocks(prev => [...prev, ...blocksOnSameFloor.filter(b => b !== block)]);
     }
 
     const handleBlockClick = (block) => {

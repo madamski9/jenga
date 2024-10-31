@@ -49,8 +49,11 @@ export const getBlockStyle = (block, isRemoved) => {
         } else if (relatedBlocks.includes(block - 113)) {
             return styles.blockRemovedSpecial;
         } else if (blocks1000.includes(block)) {
-            console.log('block1000')
-            return styles.blockEven;
+            return styles.blockEven; // Styl dla block
+        } else if (blocks1000_2.includes(block+199)) {
+            if (isRemoved(block - 199)) {
+                console.log("tak")
+            }
         } else {
             return styles.blockRemovedSpecial;
         } 
