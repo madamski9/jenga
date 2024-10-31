@@ -25,12 +25,13 @@ const GameScreen = () => {
     const [ blockNum, setBlockNum ] = useState(1)
     const [ clickableBlocks, setClickableBlocks ] = useState([])
     const [ onlyNewBlocksClickable, setOnlyNewBlocksClickable ] = useState(false)
+    const [ clickedBlocks, setClickedBlocks ] = useState([])
 
     const isRemoved = (block) => {
         return removedBlocks.some(elem => elem === block)
     }
 
-    const JengaBlock = ({ block, onRemove, newBlocks, isNew, isClickable, onBlockClick }) => {
+    const JengaBlock = ({ block, isNew, isClickable, onBlockClick }) => {
         const blockStyle = isNew
             ? (block % 2 !== 0 ? styles.placeBlock : styles.placeBlockEven)
             : (block % 2 !== 0 ? styles.block : styles.blockEven)
@@ -98,12 +99,14 @@ const GameScreen = () => {
     }
 
     const handlePlaceBlock = (block) => {
+        //console.log(block)
         setNewBlocks(prev => prev.filter(item => item !== block))
         setClickableBlocks([])
         setOnlyNewBlocksClickable(false) // resetowanie
     }
 
     const handleBlockClick = (block) => {
+        console.log(block)
         if (onlyNewBlocksClickable && block < 1000) {
             return
         }
@@ -113,6 +116,7 @@ const GameScreen = () => {
             handleRemoveBlock(block, setRemovedBlocks)
             handleNewBlocks(block)
         }
+        setClickedBlocks(prev => [...prev, block])
     }
 
     const blocks = generateBlocks(currNumber)
@@ -131,8 +135,6 @@ const GameScreen = () => {
                 <JengaBlock
                     key={`new-${idx}`}
                     block={block}
-                    onRemove={handleRemoveBlock}
-                    newBlocks={handleNewBlocks}
                     isNew={true}
                     isClickable={true}
                     onBlockClick={handleBlockClick}
@@ -142,8 +144,6 @@ const GameScreen = () => {
                 <JengaBlock
                     key={idx}
                     block={block}
-                    onRemove={handleRemoveBlock}
-                    newBlocks={handleNewBlocks}
                     isNew={false}
                     isClickable={!onlyNewBlocksClickable}
                     onBlockClick={handleBlockClick}
