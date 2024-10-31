@@ -99,10 +99,10 @@ const GameScreen = () => {
     }
 
     const handlePlaceBlock = (block) => {
-        console.log(block)
         setNewBlocks(prev => prev.filter(item => item !== block))
         setClickableBlocks([])
         setOnlyNewBlocksClickable(false) // resetowanie
+        handleRemoveBlock(block, setRemovedBlocks)
     }
 
     const handleBlockClick = (block) => {

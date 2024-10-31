@@ -50,7 +50,7 @@ export const getBlockStyle = (block, isRemoved) => {
             return styles.blockRemovedSpecial;
         } else if (blocks1000.includes(block)) {
             console.log('block1000')
-            return styles.block;
+            return styles.blockEven;
         } else {
             return styles.blockRemovedSpecial;
         } 
