@@ -1,28 +1,29 @@
 # Jenga Game
 
-### Version: Alpha 1.0
 ## Description
 
-Jenga is a web-based game for ios/android users built with a React frontend and a Python backend. The goal of the game is to strategically remove and stack blocks from a tower without causing it to collapse. It can be played in single-player mode or with up to 2 players. Players can be either bots or human participants, and this project was developed to practice full-stack development using modern web technologies.
+Jenga is a web-based game built with JavaScript and React for iOS/Android users. The goal of this project is to showcase the core logic of removing blocks from a Jenga tower. Users can pull out blocks and rotate the tower horizontally (left and right on the Y-axis) to view the structure from different angles.
 
 ## Requirements
 
-Frontend: React, JavaScript
-Backend: Python (Flask/Django)
-Additional Libraries: axios (for API communication), random (Python for game logic)
-How To Play
+- **Frontend**: React, JavaScript
+- **Additional Libraries**: None required
 
-### Controls:
-- Menu Navigation:
-  - Navigate: up and down by finger
-  - Selection: press with finger
-- In-Game:
-  - Pulling a block: finger press on block you want to pull
-  - Placing a block: finger press on special appearing block on the top of the tower 
+## How To Play
+
+### Controls
+
+- **Menu Navigation**:
+  - **Selection**: Tap with a finger
+
+- **In-Game**:
+  - **Pulling a block**: Tap on the block you want to pull to remove it from the tower.
+  - **Rotating the tower**: Tap on left or right arrow to rotate the tower horizontally (90 degrees on the Y-axis), providing a different view of the structure.
 
 ### Rules
-The objective is to keep the Jenga tower standing as long as possible while removing and stacking blocks. Players take turns removing one block at a time and placing it on the top of the tower. If a player causes the tower to collapse, they lose the game.
 
-Each player may only use one hand at a time.
-Blocks can be removed from any level except the top two completed rows.
-The game ends when the tower collapses, and the player who caused it to fall loses.
+This simplified version of Jenga focuses on block removal and rotation mechanics:
+
+- **Rotation**: Players can rotate the tower to see it from multiple angles, aiding in block selection.
+- **No Failure Condition**: The tower remains stable regardless of block removal, allowing players to freely explore block removal strategies.
+
