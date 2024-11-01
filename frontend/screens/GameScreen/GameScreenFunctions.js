@@ -44,7 +44,6 @@ export const handleRemoveBlock = (block, setRemovedBlocks) => {
     const blocks300 = [314, 316, 318, 320, 322, 324, 326];
     const block300_2 = [302, 304, 306, 308, 310, 312];
     const blocks100_2 = [114, 116, 118, 120, 122, 124, 126];
-    const blocks1000 = [1302];
 
     if (relatedBlocks.includes(block)) {
         setRemovedBlocks(prev => [...prev, block, block + 113]);
@@ -56,9 +55,6 @@ export const handleRemoveBlock = (block, setRemovedBlocks) => {
         setRemovedBlocks(prev => [...prev, block, block - 287]);
     } else if (blocks100_2.includes(block)) {
         setRemovedBlocks(prev => [...prev, block, block - 113]);
-    } else if (blocks1000.includes(block)) {
-        console.log(block, "is 1000")
-        setRemovedBlocks(prev => [...prev, block]);
     } else {
         setRemovedBlocks(prev => [...prev, block]);
     }

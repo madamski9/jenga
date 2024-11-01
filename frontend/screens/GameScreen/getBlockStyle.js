@@ -8,9 +8,6 @@ export const getBlockStyle = (block, isRemoved) => {
     const blocks100 = [102, 104, 106, 108, 110, 112];
     const blocks200_2 = [214, 216, 218, 220, 222, 224, 226];
     const blocks100_2 = [114, 116, 118, 120, 122, 124, 126];
-    //const regex = /^(11|12|13)(0|1|2)[02468]$/
-    const blocks1000 = [1102, 1202, 1302]
-    const blocks1000_2 = [1103]
  
     if (isRemoved(block)) {
         console.log(block, "is removed")
@@ -48,12 +45,6 @@ export const getBlockStyle = (block, isRemoved) => {
             return styles.blockRemoved;
         } else if (relatedBlocks.includes(block - 113)) {
             return styles.blockRemovedSpecial;
-        } else if (blocks1000.includes(block)) {
-            return styles.blockEven; // Styl dla block
-        } else if (blocks1000_2.includes(block+199)) {
-            if (isRemoved(block - 199)) {
-                console.log("tak")
-            }
         } else {
             return styles.blockRemovedSpecial;
         } 
