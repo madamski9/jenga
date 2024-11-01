@@ -27,3 +27,6 @@ This simplified version of Jenga focuses on block removal and rotation mechanics
 - **Rotation**: Players can rotate the tower to see it from multiple angles, aiding in block selection.
 - **No Failure Condition**: The tower remains stable regardless of block removal, allowing players to freely explore block removal strategies.
 
+### Images
+
+<img src="https://github.com/user-attachments/assets/418664e8-04c7-4eda-a0b6-dd01cef45e4f" alt="IMG_2832" width="246" />  <img src="https://github.com/user-attachments/assets/9ff6dfea-3913-4680-a44d-22fb1bb95d52" alt="IMG_2832" width="246" />  <img src="https://github.com/user-attachments/assets/ba3a0e52-925b-429b-a7ac-f0ada9e92d2b" alt="IMG_2832" width="246" />  <img src="https://github.com/user-attachments/assets/6684e3fa-23b0-47ec-b645-712ba2f571b3" alt="IMG_2832" width="246" />
